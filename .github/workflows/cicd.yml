@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest # choose the OS for running the action
     strategy:
       matrix: 
-        python: ['3.6', '3.7', '3.8']
+        python: ['3.7', '3.8', '3.9']
     env:
       PYTHON: ${{ matrix.python }}
     # define the individual sequential steps to be run
