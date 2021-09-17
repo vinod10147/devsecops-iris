@@ -78,7 +78,7 @@ jobs:
   upload_zip:
     runs-on: ubuntu-latest # choose the OS for running the action
     needs: 
-      - build
+      - unittest
       - codecoverage
       - container-security
     
