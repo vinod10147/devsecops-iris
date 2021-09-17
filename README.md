@@ -19,3 +19,10 @@ This repository contains code which demonstrates Dev-Sec-Ops using a `FastAPI` a
 
 
 ## Assignment Tasks
+- Fix badge to show coverage for your repo. (hint: find correct link for badge from codecov.io)
+- Add OS to matrix strategy along with PYTHON to test with different operating systems like `ubuntu-latest`, `windows-latest`  etc.
+- Improve code coverage and bring it above 95%
+- Make a visualisation for sarif report using any tool. upload screenshot, image, html or pdf. Add it to the reports/ folder. 
+
+## Submission
+- Link to github repository as a comment on the submission (olympus portal). [uploading .txt is optional]
