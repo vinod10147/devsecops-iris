@@ -31,6 +31,7 @@ def predict(query_data):
     print(f"Model prediction: {classes[prediction]}")
     return classes[prediction]
 
+
 # function to retrain the model as part of the feedback loop
 def retrain(data):
     # pull out the relevant X and y from the FeedbackIn object

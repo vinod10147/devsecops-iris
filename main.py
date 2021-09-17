@@ -23,6 +23,7 @@ class QueryIn(BaseModel):
 class QueryOut(BaseModel):
     flower_class: str
 
+
 # class which is expected in the payload while re-training
 class FeedbackIn(BaseModel):
     sepal_length: float
@@ -30,6 +31,7 @@ class FeedbackIn(BaseModel):
     petal_length: float
     petal_width: float
     flower_class: str
+
 
 # Route definitions
 @app.get("/ping")
@@ -45,6 +47,7 @@ def ping():
 def predict_flower(query_data: QueryIn):
     output = {"flower_class": predict(query_data)}
     return output
+
 
 @app.post("/feedback_loop", status_code=200)
 # Route to further train the model based on user input in form of feedback loop
