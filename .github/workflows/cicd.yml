@@ -1,11 +1,11 @@
 name: ci-cd
 
 # run the action on pull_requests and pushes
-on: [pull_request, push]
+on: push
 
 jobs:
   # first job to test the application using pytest
-  build:
+  unittest:
     runs-on: ubuntu-latest # choose the OS for running the action
     # define the individual sequential steps to be run
     steps:
@@ -48,42 +48,40 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
-          verbose: true
 
-  # container-security:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout the repository
-  #       uses: actions/checkout@v2
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v1
-  #     - name: build local container
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         tags: localbuild/testimage:latest
-  #         context: .
-  #         push: false
-  #         load: true
-  #     - name: Scan image
-  #       uses: anchore/scan-action@v3
-  #       with:
-  #         image: "localbuild/testimage:latest"
-  #         fail-build: false
-  #         severity-cutoff: medium
-  #     - name: Upload artifact
-  #       uses: actions/upload-artifact@v1.0.0
-  #       with:
-  #         name: SARIF report
-  #         path: ./results.sarif
+  container-security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: build local container
+        uses: docker/build-push-action@v2
+        with:
+          tags: localbuild/testimage:latest
+          context: .
+          push: false
+          load: true
+      - name: Scan image
+        uses: anchore/scan-action@v3
+        with:
+          image: "localbuild/testimage:latest"
+          fail-build: false
+          severity-cutoff: medium
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: SARIF report
+          path: ./results.sarif
   
-  # second job to zip the codebase and upload it as an artifact when build succeeds 
   upload_zip:
     runs-on: ubuntu-latest # choose the OS for running the action
-    needs: build
+    needs: 
+      - build
+      - codecoverage
+      - container-security
     
-    # only run this action for pushes
-    if: ${{ github.event_name == 'push' }}
-
     # define the individual sequential steps to be run
     steps:
       - name: Checkout the repository
