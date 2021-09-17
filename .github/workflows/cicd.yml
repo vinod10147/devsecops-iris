@@ -72,14 +72,11 @@ jobs:
           image: "localbuild/testimage:latest"
           fail-build: false
           severity-cutoff: medium
-      - run: |
-          ls -al .
-          ls -al ..
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: AnchoreReports
-          path: ./anchore-reports/
+          name: SARIF report
+          path: ./results.sarif
   
   # second job to zip the codebase and upload it as an artifact when build succeeds 
   upload_zip:
