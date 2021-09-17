@@ -72,7 +72,9 @@ jobs:
           image: "localbuild/testimage:latest"
           fail-build: false
           severity-cutoff: medium
-
+      - run: |
+          ls -al .
+          ls -al ..
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
